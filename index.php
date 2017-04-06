@@ -1,2 +1,2 @@
-<?php 
-echo 'Site is working';
+<?php
+
