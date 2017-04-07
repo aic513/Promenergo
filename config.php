@@ -16,7 +16,7 @@ define('VIEW', 'template/default');  //путь к шаблону
 
 define('LIB','lib');  //путь к библиотекам
 
-define('SITE_URL', '/promenergo.loc');  //базовый путь к сайту
+define('SITE_URL', 'promenergo.loc/');  //базовый путь к сайту
 
 define('QUANTITY', 5);  //количество выводимых товаров при постраничной навигации
 

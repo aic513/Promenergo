@@ -114,7 +114,7 @@ abstract class Base_Controller
         return (int)$var;
     }
 
-    public function is_post()
+    public function is_post()  //проверка,что данные пришли методо POST
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return TRUE;

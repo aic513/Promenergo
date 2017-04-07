@@ -16,7 +16,7 @@ set_include_path(get_include_path()  //задаем пути для покдлю
 );
 
 function __autoload($class_name){
-    if(!include_once($class_name.'php')){
+    if(!include_once($class_name.'.php')){
         try{
             throw new ContrExeption ('Неправильный файл для подключения');
         }catch (CouchbaseException $e){
@@ -24,5 +24,8 @@ function __autoload($class_name){
         }
     }
 }
+
+$obj = Route_Controller::get_instance();
+
 
 
