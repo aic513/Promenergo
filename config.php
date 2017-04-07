@@ -35,6 +35,8 @@ define('PASSWORD', 1234);
 
 define('DB_NAME', 'promenergo');
 
+define('IMG_WIDTH',116);
+
 $conf = array(   //массив с настройками для подключения скриптов и стилей в header
     'styles' => array(  //пользовательская часть
         'style.css'
