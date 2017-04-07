@@ -1,0 +1,20 @@
+# отключаем экранирование кавычек
+php_flag magic_quotes_gpc Off
+
+#кодировка по умолчанию utf-8
+AddDefaultCharset utf-8
+
+#файл загрузки по умолчанию
+DirectoryIndex index.php
+
+#включаем модуль перенаправления modRewrite
+RewriteEngine On
+
+#если в url-запросе введен не файл
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#если в url-запросе введена не папка
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#то перенаправляем на index.php
+RewriteRule ^(.*) index.php
