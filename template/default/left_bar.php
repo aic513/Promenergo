@@ -1,8 +1,8 @@
 <td class="nav">
     <div class="links">
-        <a href="/"><img src="images/home.gif" alt="главная" title="на главную" /></a>
-        <a href="/contacts/"><img src="images/kontakts.gif" alt="контакты" title="перейти к контактам" /></a>
-        <a href="/map.php"><img src="images/amp.gif" alt="карта сайта" title="к карте сайта" /></a>
+        <a href="/"><img src="/template/default/images/home.gif" alt="главная" title="на главную" /></a>
+        <a href="/contacts/"><img src="/template/default/images/kontakts.gif" alt="контакты" title="перейти к контактам" /></a>
+        <a href="/map.php"><img src="/template/default/images/amp.gif" alt="карта сайта" title="к карте сайта" /></a>
     </div>
     <ul class="navigation">
         <li>&mdash;&nbsp; <a href="#">Новости</a></li>

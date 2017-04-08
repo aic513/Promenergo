@@ -12,7 +12,7 @@ define('CONTROLLER', 'core/controller');  //путь к контроллеру
 
 define('MODEL', 'core/model');  //путь к модели
 
-define('VIEW', 'template/default');  //путь к шаблону
+define('VIEW', 'template/default/');  //путь к шаблону
 
 define('LIB','lib');  //путь к библиотекам
 

@@ -2,6 +2,7 @@
 
 /*
  * Контроллер для преобразования URL-адресов
+ * Контроллер без которого вообще не будет работать сайт
  */
 
 abstract class Base_Controller
@@ -12,20 +13,20 @@ abstract class Base_Controller
     protected $styles, $styles_admin;
     protected $scripts, $scripts_admin;
     protected $error;
-    protected $page;  //здесь будет храниться страница,возвразенная методом output
+    protected $page;  //здесь будет храниться страница,возвращенная методом output
 
     public function route()  //загружает определенный контроллер
     {
-        if(class_exists($this->controller)){ //есть ли у этого класса такой контроллер?
-            $ref=new ReflectionClass($this->controller);  //передали конструктуру имя класса
-            if($ref->hasMethod('request')){  //есть ли метод request?
-                if($ref->isInstantiable()){  //можно ли получить объект этого класса?
+        if (class_exists($this->controller)) { //есть ли у этого класса такой контроллер?
+            $ref = new ReflectionClass($this->controller);  //передали конструктуру имя класса
+            if ($ref->hasMethod('request')) {  //есть ли метод request?
+                if ($ref->isInstantiable()) {  //можно ли получить объект этого класса?
                     $class = $ref->newInstance();  //  получаем объект этого класса в $class
                     $method = $ref->getMethod('request');  //запускаем у этого объекта метод request
-                    $method->invoke($class,$this->get_params());  //передаем методу request параметры
+                    $method->invoke($class, $this->get_params());  //передаем методу request параметры
                 }
             }
-        }else{
+        } else {
             throw new ContrExeption('Нет такой страницы');
         }
     }
@@ -96,16 +97,18 @@ abstract class Base_Controller
         if (!empty($this->error)) {
             $this->write_error();
         }
+        $this->get_page();
     }
 
     public function render($path, $param = array())  //метод-шаблонизатор
     {
         extract($param);  //создаем в памяти переменные,которые передали массивом
         ob_start();  //открываем буфер обмена
-        if (!include($path . 'php')) {
-            throw new ContrExeption('Данного шаблона не существует');
-        }
-        return ob_get_clean();  //возвращаем данные из буфера и очищаем его
+        //if (!include($path . '.php')) {
+          //  throw new ContrException('Данного шаблона не существует');
+        //}
+        include($path . '.php');
+            return ob_get_clean();  //возвращаем данные из буфера и очищаем его
     }
 
     public function clear_str($var)  //очистка строковых данных

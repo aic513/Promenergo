@@ -2,17 +2,14 @@
 /*
  * Файл,который собирает в себе все куски шаблона
  */
-include 'header.php';
 ?>
+<?= $header; ?>
 <table class="content-main" cellpadding="0" cellspacing="0">
     <tr>
-    <?php   //3 блока в контентной части
-    include 'left_bar.php';
-    include 'content.php';
-    include 'right_bar.php';
-    ?>
+        <?= $left_bar; ?>
+        <?= $content; ?>
+        <?= $right_bar; ?>
     </tr>
 </table>
-<?php
-include 'footer.php';
-?>
+<?= $footer; ?>
+
