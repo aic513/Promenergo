@@ -15,17 +15,18 @@ set_include_path(get_include_path()  //задаем пути для покдлю
     .PATH_SEPARATOR.LIB
 );
 
-function __autoload($class_name){
+function __autoload($class_name){   //автозагрузка классов
     if(!include_once($class_name.'.php')){
         try{
             throw new ContrExeption ('Неправильный файл для подключения');
-        }catch (CouchbaseException $e){
+        }catch (ContrExeption $e){
             echo $e->getMessage();
         }
     }
 }
 
 $obj = Route_Controller::get_instance();
+$obj->route();
 
 
 

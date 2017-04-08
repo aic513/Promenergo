@@ -18,7 +18,7 @@ class Route_Controller extends Base_Controller
         }
     }
 
-    private function __construct()
+    private function __construct()    //при загрузке класса мы разбираем адресную строку,и если есть,то выделяем параметры,переданные в нее
     {
         $address = $_SERVER['REQUEST_URI'];
         $path = $_SERVER['SERVER_NAME'] . '/';

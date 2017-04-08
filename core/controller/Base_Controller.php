@@ -14,9 +14,20 @@ abstract class Base_Controller
     protected $error;
     protected $page;  //здесь будет храниться страница,возвразенная методом output
 
-    public function route()  //загружает определнный контроллер
+    public function route()  //загружает определенный контроллер
     {
-
+        if(class_exists($this->controller)){ //есть ли у этого класса такой контроллер?
+            $ref=new ReflectionClass($this->controller);  //передали конструктуру имя класса
+            if($ref->hasMethod('request')){  //есть ли метод request?
+                if($ref->isInstantiable()){  //можно ли получить объект этого класса?
+                    $class = $ref->newInstance();  //  получаем объект этого класса в $class
+                    $method = $ref->getMethod('request');  //запускаем у этого объекта метод request
+                    $method->invoke($class,$this->get_params());  //передаем методу request параметры
+                }
+            }
+        }else{
+            throw new ContrExeption('Нет такой страницы');
+        }
     }
 
     public function init()  //формирует массив стилей и скриптов
