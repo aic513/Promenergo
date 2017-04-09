@@ -29,9 +29,9 @@ define('UPLOAD_DIR', 'images/');  //путь к папке с картинкам
  */
 define('HOST', 'localhost');
 
-define('USER', 'Denis');
+define('USER', 'root');
 
-define('PASSWORD', 1234);
+define('PASSWORD', '');
 
 define('DB_NAME', 'promenergo');
 

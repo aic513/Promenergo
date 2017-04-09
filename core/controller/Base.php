@@ -31,6 +31,9 @@ abstract class Base extends Base_Controller
         foreach ($this->scripts as $script) {
             $this->script[] = SITE_URL . VIEW . $script;
         }
+
+        $this->ob_m = Model::get_instance();    //создаем объект класса Model
+        print_r($this->ob_m->test_sql());
     }
 
     protected function output()  //выдает данные на выход
