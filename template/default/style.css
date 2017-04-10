@@ -672,7 +672,6 @@ p.more {
 
 .adm-bord-bot {
     height: 2px;
-    width:;
     background: url(images/punktir.gif) bottom repeat-x;
     margin: 20px 20px 0;
 }
@@ -683,4 +682,37 @@ p.more {
 
 .button-catalog-adm img {
     margin: 0 10px 0 17px;
+}
+
+span.menu_links_text, span.menu_links_text1, span.menu_links_text2, span.menu_links_text3 {
+    position: absolute;
+    color: #a5adb9;
+    text-decoration: none;
+    font-size: 11px;
+    font-family: Arial;
+    font-weight: bold
+}
+
+span.menu_links_text {
+    margin-left: 70px;
+    margin-top: 140px;
+}
+
+span.menu_links_text1 {
+    margin-left: 90px;
+    margin-top: 105px;
+}
+
+span.menu_links_text2 {
+    margin-left: 105px;
+    margin-top: 75px;
+}
+
+span.menu_links_text3 {
+    margin-left: 110px;
+    margin-top: 50px;
+}
+
+a:hover span.menu_links_text, a:hover span.menu_links_text1, a:hover span.menu_links_text2, a:hover span.menu_links_text3 {
+    color: #09606f;
 }

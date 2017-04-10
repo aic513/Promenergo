@@ -27,7 +27,7 @@ class Model
         }
     }
 
-    public function get_news()  //выбрать новости, выводит новости в правой колонке
+    public function get_news()  //выбрает новости, для правой колонки
     {
         $result = $this->ins_driver->select(
             array('news_id', 'title', 'anons', 'date'),
@@ -47,7 +47,7 @@ class Model
         return $row;
     }
 
-    public function get_pages($all = FALSE)  //выводит контент в левой колонке
+    public function get_pages($all = FALSE)  //выбирает контент для левой колонки
     {
         if ($all) {
             $result = $this->ins_driver->select(
@@ -71,7 +71,7 @@ class Model
         return $result;
     }
 
-    public function get_catalog_type()  //выводит типы каталога
+    public function get_catalog_type()  //выбирает типы каталога
     {
         $result = $this->ins_driver->select(
             array('type_id', 'type_name'),
@@ -80,7 +80,7 @@ class Model
         return $result;
     }
 
-    public function get_catalog_brands()  //выводит товар по брендам слева
+    public function get_catalog_brands()  //выбирает товар по брендам слева
     {
         $result = $this->ins_driver->select(
             array('brand_id', 'brand_name', 'parent_id'),
@@ -98,5 +98,37 @@ class Model
         return $arr;
     }
 
+    public function get_home_page()  // выбирает контент для домашней страницы
+    {
+        $result = $this->ins_driver->select(
+            array('page_id', 'title', 'text', 'keywords', 'discription'),
+            'pages',
+            array('type' => 'home'),
+            FALSE,
+            FALSE,
+            1
+        );
+        return $result[0];
+    }
 
+    public function get_header_menu() {  //выбирает меню для хедера  SELECT type_id,type_name FROM type WHERE in_header IN ('1','2','3','4')
+        $result = $this->ins_driver->select(
+            array('type_id','type_name'),
+            'type',
+            array('in_header' => "'1','2','3','4'"),
+            'in_header',
+            'ASC',
+            4,
+            array('IN')
+        );
+        $row = array();
+        foreach($result as $item) { 
+            $item['type_name'] = str_replace(" ","<br />",$item['type_name']);  //добавляем перенос строки между словами
+            $item['type_name'] = mb_convert_case($item['type_name'],MB_CASE_UPPER,"UTF-8");  //меняем регистр букв на верхний
+            $row[] = $item;
+        }
+
+        return $row;
+
+    }
 }

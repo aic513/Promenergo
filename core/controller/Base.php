@@ -23,26 +23,30 @@ abstract class Base extends Base_Controller
     protected $pages;  //информация в левом блоке сайта
     protected $catalog_type;  //тип каталога
     protected $catalog_brands;  //список брендов слева
+    protected $keywords,$discription;
 
     protected function input()  //берет данные на вход
     {
         $this->title = "Промстрой энерго | ";
 
         foreach ($this->styles as $style) {
-            $this->style[] = SITE_URL . VIEW . $style;
+            $this->style[] = VIEW . $style;
         }
 
         foreach ($this->scripts as $script) {
-            $this->script[] = SITE_URL . VIEW . $script;
+            $this->script[] = VIEW . $script;
         }
-
+        //Object Model
         $this->ob_m = Model::get_instance();    //создаем объект класса Model
-        $this->news = $this->ob_m->get_news();  //выводим блок с новостями справа
-        $this->pages = $this->ob_m->get_pages(); //выводим блок с новостями слева
-        $this->catalog_type = $this->ob_m->get_catalog_type(); //выводим тип каталога
-        $this->catalog_brands = $this->ob_m->get_catalog_brands(); //выводим тип каталога
+        $this->news = $this->ob_m->get_news();  //получаем данные для блока с новостями справа
+        $this->pages = $this->ob_m->get_pages(); //получаем данные для блока с новостями слева
+        $this->catalog_type = $this->ob_m->get_catalog_type(); //получаем данные для блока тип каталога
+        $this->catalog_brands = $this->ob_m->get_catalog_brands(); //получаем данные для блока тип каталога
+        $this->header_menu = $this->ob_m->get_header_menu(); //получаем данные для блока меню в хедере (здоровые картинки)
     }
 
+
+    
     protected function output()  //выдает данные на выход
     {
         $this->left_bar = $this->render(VIEW . 'left_bar',
@@ -57,6 +61,16 @@ abstract class Base extends Base_Controller
 
         $this->footer = $this->render(VIEW . 'footer',
             array('pages' => $this->pages));
+
+        $this->header = $this->render(VIEW . 'header',
+            array(
+                'styles'=>$this->style,
+                'scripts'=>$this->script,
+                'header_menu'=>$this->header_menu,
+                'title' => $this->title,
+                'keywords'=>$this->keywords,
+                'discription'=>$this->discription
+            ));
 
         $page = $this->render(VIEW . 'index',
             array(
