@@ -100,7 +100,7 @@ abstract class Base_Controller
         $this->get_page();
     }
 
-    public function render($path, $param = array())  //метод-шаблонизатор
+    public function render($path, $param = array())  //метод-шаблонизатор,в этот метод передаем переменные,которые потом выводим в шаблоне
     {
         extract($param);  //создаем в памяти переменные,которые передали массивом
         ob_start();  //открываем буфер обмена

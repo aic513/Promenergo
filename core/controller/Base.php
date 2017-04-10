@@ -20,6 +20,9 @@ abstract class Base extends Base_Controller
     protected $footer;
     protected $right_side = TRUE;  //так как правая область есть не на каждой странице,то с помощью FALSE будем ее скрывать
     protected $news;  //массив новостей
+    protected $pages;  //информация в левом блоке сайта
+    protected $catalog_type;  //тип каталога
+    protected $catalog_brands;  //список брендов слева
 
     protected function input()  //берет данные на вход
     {
@@ -34,18 +37,27 @@ abstract class Base extends Base_Controller
         }
 
         $this->ob_m = Model::get_instance();    //создаем объект класса Model
-        $this->news = $this->ob_m->get_news();
-
+        $this->news = $this->ob_m->get_news();  //выводим блок с новостями справа
+        $this->pages = $this->ob_m->get_pages(); //выводим блок с новостями слева
+        $this->catalog_type = $this->ob_m->get_catalog_type(); //выводим тип каталога
+        $this->catalog_brands = $this->ob_m->get_catalog_brands(); //выводим тип каталога
     }
 
     protected function output()  //выдает данные на выход
     {
-        $this->left_bar = $this->render(VIEW . 'left_bar');
+        $this->left_bar = $this->render(VIEW . 'left_bar',
+            array('pages' => $this->pages,
+                'types' => $this->catalog_type,
+                'brands' => $this->catalog_brands)
+        );
         if ($this->right_side) {
             $this->right_bar = $this->render(VIEW . 'right_bar',
-                array('news'=>$this->news));
+                array('news' => $this->news));
         }
-        $this->footer = $this->render(VIEW . 'footer');
+
+        $this->footer = $this->render(VIEW . 'footer',
+            array('pages' => $this->pages));
+
         $page = $this->render(VIEW . 'index',
             array(
                 'header' => $this->header,
