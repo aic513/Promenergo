@@ -27,19 +27,25 @@ class Model
         }
     }
 
-    public function test_sql()//ля теста запроса
+    public function get_news()  //выбрать новости
     {
-        $result = $this->ins_driver->select( //обращаемся к объекту класса Model_Driver  и вызываем у него метод select()
-            array("type_id", "type_name"),
-            'type'
-//            array('publish' => 1, "in_header" => 1),
-//            "date",
-//            "DESC",
-//            10,
-//            array("=", ">"),
-//            array('title,text'=>'kran')
+        $result = $this->ins_driver->select(
+            array('news_id', 'title', 'anons', 'date'),
+            'news',
+            array(),
+            'date',
+            'DESC',
+            3
         );
-        return $result;
+        $row = array();
+        foreach ($result as $value) {
+            $value['anons'] = substr($value['anons'], 0, 255);
+            $value['anons'] = substr($value['anons'], 0, strrpos($value['anons'], ' '));
+
+            $row[] = $value;
+        }
+        return $row;
     }
+
 
 }

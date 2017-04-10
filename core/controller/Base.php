@@ -19,6 +19,7 @@ abstract class Base extends Base_Controller
     protected $right_bar;//шаблон правого блока
     protected $footer;
     protected $right_side = TRUE;  //так как правая область есть не на каждой странице,то с помощью FALSE будем ее скрывать
+    protected $news;  //массив новостей
 
     protected function input()  //берет данные на вход
     {
@@ -33,14 +34,16 @@ abstract class Base extends Base_Controller
         }
 
         $this->ob_m = Model::get_instance();    //создаем объект класса Model
-        print_r($this->ob_m->test_sql());
+        $this->news = $this->ob_m->get_news();
+
     }
 
     protected function output()  //выдает данные на выход
     {
         $this->left_bar = $this->render(VIEW . 'left_bar');
         if ($this->right_side) {
-            $this->right_bar = $this->render(VIEW . 'right_bar');
+            $this->right_bar = $this->render(VIEW . 'right_bar',
+                array('news'=>$this->news));
         }
         $this->footer = $this->render(VIEW . 'footer');
         $page = $this->render(VIEW . 'index',
