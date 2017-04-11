@@ -43,6 +43,7 @@ abstract class Base extends Base_Controller
         $this->catalog_type = $this->ob_m->get_catalog_type(); //получаем данные для блока тип каталога
         $this->catalog_brands = $this->ob_m->get_catalog_brands(); //получаем данные для блока тип каталога
         $this->header_menu = $this->ob_m->get_header_menu(); //получаем данные для блока меню в хедере (здоровые картинки)
+        
     }
 
 

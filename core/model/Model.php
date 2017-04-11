@@ -142,4 +142,14 @@ class Model
         );
         return $result[0];
     }
+
+    public function get_page($id)   //получаем полный текст страниц
+    {
+        $result = $this->ins_driver->select(  //SELECT  'title', 'text', 'date', 'keywords', 'discription' FROM pages WHERE 'news_id' => $id
+            array('title', 'keywords', 'discription', 'text'),
+            'pages',
+            array('page_id' => $id)
+        );
+        return $result[0];
+    }
 }
