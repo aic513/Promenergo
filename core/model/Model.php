@@ -140,6 +140,6 @@ class Model
             'news',
             array('news_id' => $id)
         );
-        return $result;
+        return $result[0];
     }
 }

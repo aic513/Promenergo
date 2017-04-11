@@ -13,16 +13,15 @@ class News_Controller extends Base
     {
         parent::input();
 
-        $this->title .= "Новости";  //ормируем заголовок для страницы
+        $this->title .= "Новости";  //формируем заголовок для страницы
 
-        if (isset($params['id'])) {  //очищаем данные от лищних символов
+        if (isset($params['id'])) {  //очищаем данные от лишних символов
             $id = $this->clear_int($params['id']);
         }
         if ($id) {
             $this->news_text = $this->ob_m->get_news_text($id);  //передаем id  в метод вывода новостей в объект модели
-            print_r($this->news_text);
-            //$this->keywords = $this->news_text['keywords'];
-           // $this->discription = $this->news_text['discription'];
+            $this->keywords = $this->news_text['keywords'];
+            $this->discription = $this->news_text['discription'];
         }
     }
 
