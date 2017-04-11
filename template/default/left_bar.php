@@ -1,9 +1,9 @@
 <td class="nav">
     <div class="links">
         <a href="<?=SITE_URL?>"><img src="<?=VIEW?>images/home.gif" alt="главная" title="на главную"/></a>
-        <a href="<?=SITE_URL?>/contacts/"><img src="<?=VIEW?>images/kontakts.gif" alt="контакты"
+        <a href="<?=SITE_URL?>contacts/"><img src="<?=VIEW?>images/kontakts.gif" alt="контакты"
                                   title="перейти к контактам"/></a>
-        <a href="<?=SITE_URL?>/map"><img src="<?=VIEW?>images/amp.gif" alt="карта сайта" title="к карте сайта"/></a>
+        <a href="<?=SITE_URL?>map"><img src="<?=VIEW?>images/amp.gif" alt="карта сайта" title="к карте сайта"/></a>
     </div>
     <ul class="navigation">
         <li>&mdash;&nbsp; <a href="<?=SITE_URL;?>archive">Новости</a></li>

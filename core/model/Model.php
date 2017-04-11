@@ -152,4 +152,14 @@ class Model
         );
         return $result[0];
     }
+
+    public function get_contacts()  //получаем страницу контактов по клику на иконку контакты
+    {
+        $result = $this->ins_driver->select(
+            array('page_id', 'title', 'text', 'keywords', 'discription'),
+            'pages',
+            array('type' => 'contacts')
+        );
+        return $result[0];
+    }
 }
