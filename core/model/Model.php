@@ -111,9 +111,10 @@ class Model
         return $result[0];
     }
 
-    public function get_header_menu() {  //выбирает меню для хедера  SELECT type_id,type_name FROM type WHERE in_header IN ('1','2','3','4')
+    public function get_header_menu()  //выбирает меню для хедера  SELECT type_id,type_name FROM type WHERE in_header IN ('1','2','3','4')
+    {
         $result = $this->ins_driver->select(
-            array('type_id','type_name'),
+            array('type_id', 'type_name'),
             'type',
             array('in_header' => "'1','2','3','4'"),
             'in_header',
@@ -122,13 +123,23 @@ class Model
             array('IN')
         );
         $row = array();
-        foreach($result as $item) { 
-            $item['type_name'] = str_replace(" ","<br />",$item['type_name']);  //добавляем перенос строки между словами
-            $item['type_name'] = mb_convert_case($item['type_name'],MB_CASE_UPPER,"UTF-8");  //меняем регистр букв на верхний
+        foreach ($result as $item) {
+            $item['type_name'] = str_replace(" ", "<br />", $item['type_name']);  //добавляем перенос строки между словами
+            $item['type_name'] = mb_convert_case($item['type_name'], MB_CASE_UPPER, "UTF-8");  //меняем регистр букв на верхний
             $row[] = $item;
         }
 
         return $row;
 
+    }
+
+    public function get_news_text($id)  //получаем одну новость по id
+    {
+        $result = $this->ins_driver->select(    //SELECT  'title', 'text', 'date', 'keywords', 'discription' FROM news WHERE 'news_id' => $id
+            array('title', 'text', 'date', 'keywords', 'discription'),
+            'news',
+            array('news_id' => $id)
+        );
+        return $result;
     }
 }

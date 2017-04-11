@@ -9,7 +9,7 @@
                     <?= date("d.m.Y", $item['date']); ?>
                 </span>
                 <h2>
-                    <a href="<?= SITE_URL; ?>news/id/<?= $item['news_id'] ?>"><strong><?= $item['title']; ?></strong></a>
+                    <a href="/news/id/<?= $item['news_id'] ?>"><strong><?= $item['title']; ?></strong></a>
                 </h2>
                 <p>
                     <?= $item['anons']; ?>

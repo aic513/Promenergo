@@ -25,7 +25,7 @@
     <div class="karkas">
         <div class="main">
             <div class="header">
-                <a href="<?= SITE_URL ?>"><img src="<?= VIEW; ?>images/logo.png" class="logo"
+                <a href="/"><img src="<?= VIEW; ?>images/logo.png" class="logo"
                                                alt="Промстрой энерго"/></a>
                 <ul class="menu">
                     <li><a href="<?= VIEW; ?>catalog/type/<?= $header_menu[0]['type_id'] ?>" class="step1"><span

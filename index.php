@@ -16,13 +16,15 @@ set_include_path(get_include_path()  //задаем пути для покдлю
 );
 
 function __autoload($class_name){   //автозагрузка классов
-    if(!include_once($class_name.'.php')){
-        try{
-            throw new ContrExeption ('Неправильный файл для подключения');
-        }catch (ContrExeption $e){
-            echo $e->getMessage();
-        }
-    }
+   // if(!include_once($class_name.'.php')){
+    //    try{
+        //    throw new ContrExeption ('Неправильный файл для подключения');
+        //}catch (ContrExeption $e){
+           // echo $e->getMessage();
+     //   }
+   // }
+
+    include_once($class_name.'.php');
 }
 
 $obj = Route_Controller::get_instance();
