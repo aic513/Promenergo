@@ -1,50 +1,82 @@
 <td class="content">
 
-    <h1>
-        Новости
-    </h1>
-    <div class="news-cat">
-        <span>08.10.2008</span>
-        <h2><a href="#">Усатли от чугунных фитингов сомнительного качества? у нас есть решение!</a></h2>
+	<h1>
+		Новости
+	</h1>
+	<? if ($archive) : ?>
+		<? foreach ($archive as $item) : ?>
+			<div class="news-cat">
+								<span>
+									<?= date("d.m.Y", $item[ 'date' ]); ?>
+								</span>
+				<h2>
+					<a href="<?= SITE_URL; ?>news/id/<?= $item[ 'news_id' ]; ?>">
+						<?= $item[ 'title' ]; ?>
+					</a>
+				</h2>
 
-        <p>За 10 лет успешной работы, благодаря широкому ассортименту, высокому качеству предлагаемой продукции и
-            оптимальным срокам поставки, компания зарекомендовала себя как надёжный и стабильный партнёр-поставщик
-            запорной арматуры и сантехнического оборудования.</p>
-        <p class="more"><a href="#">Читать подробнее</a></p>
-    </div>
-    <div class="news-cat">
-        <span>08.10.2008</span>
-        <h2><a href="#">Усатли от чугунных фитингов сомнительного качества? у нас есть решение!</a></h2>
+				<p>
+					<?= $item[ 'anons' ]; ?>
+				</p>
+				<p class="more">
+					<a href="<?= SITE_URL; ?>news/id/<?= $item[ 'news_id' ]; ?>">
+						Читать подробнее
+					</a>
+				</p>
+			</div>
+		<? endforeach; ?>
 
-        <p>За 10 лет успешной работы, благодаря широкому ассортименту, высокому качеству предлагаемой продукции и
-            оптимальным срокам поставки, компания зарекомендовала себя как надёжный и стабильный партнёр-поставщик
-            запорной арматуры и сантехнического оборудования.</p>
-        <p class="more"><a href="#">Читать подробнее</a></p>
-    </div>
-    <div class="news-cat">
-        <span>08.10.2008</span>
-        <h2><a href="#">Усатли от чугунных фитингов сомнительного качества? у нас есть решение!</a></h2>
+		<? if ($navigation) : ?>
+			<ul class="pager">
+				<? if ($navigation[ 'first' ]) : ?>
+					<li class="first">
+						<a href="<?= SITE_URL; ?>archive/page/1">Первая</a>
+					</li>
+				<? endif; ?>
 
-        <p>За 10 лет успешной работы, благодаря широкому ассортименту, высокому качеству предлагаемой продукции и
-            оптимальным срокам поставки, компания зарекомендовала себя как надёжный и стабильный партнёр-поставщик
-            запорной арматуры и сантехнического оборудования.</p>
-        <p class="more"><a href="#">Читать подробнее</a></p>
-    </div>
-    <div class="news-cat">
-        <span>08.10.2008</span>
-        <h2><a href="#">Усатли от чугунных фитингов сомнительного качества? у нас есть решение!</a></h2>
+				<? if ($navigation[ 'last_page' ]) : ?>
+					<li>
+						<a href="<?= SITE_URL; ?>archive/page/<?= $navigation[ 'last_page' ] ?>">&lt;</a>
+					</li>
+				<? endif; ?>
 
-        <p>За 10 лет успешной работы, благодаря широкому ассортименту, высокому качеству предлагаемой продукции и
-            оптимальным срокам поставки, компания зарекомендовала себя как надёжный и стабильный партнёр-поставщик
-            запорной арматуры и сантехнического оборудования.</p>
-        <p class="more"><a href="#">Читать подробнее</a></p>
-    </div>
+				<? if ($navigation[ 'previous' ]) : ?>
+					<? foreach ($navigation[ 'previous' ] as $val) : ?>
+						<li>
+							<a href="<?= SITE_URL; ?>archive/page/<?= $val; ?>"><?= $val; ?></a>
+						</li>
+					<? endforeach; ?>
+				<? endif; ?>
 
-    <ul class="pager">
-        <li><span>1</span></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-    </ul>
+				<? if ($navigation[ 'current' ]) : ?>
+					<li>
+						<span><?= $navigation[ 'current' ]; ?></span>
+					</li>
+				<? endif; ?>
+
+				<? if ($navigation[ 'next' ]) : ?>
+					<? foreach ($navigation[ 'next' ] as $v) : ?>
+						<li>
+							<a href="<?= SITE_URL; ?>archive/page/<?= $v; ?>"><?= $v; ?></a>
+						</li>
+					<? endforeach; ?>
+				<? endif; ?>
+				<? if ($navigation[ 'next_pages' ]) : ?>
+					<li>
+						<a href="<?= SITE_URL; ?>archive/page/<?= $navigation[ 'next_pages' ] ?>">&gt;</a>
+					</li>
+				<? endif; ?>
+
+				<? if ($navigation[ 'end' ]) : ?>
+					<li class="last">
+						<a href="<?= SITE_URL; ?>archive/page/<?= $navigation[ 'end' ] ?>">Последняя</a>
+					</li>
+				<? endif; ?>
+
+			</ul>
+		<? endif; ?>
+	<? else : ?>
+		<p>Новостей нет</p>
+	<? endif; ?>
 
 </td>
