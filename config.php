@@ -14,11 +14,11 @@ define('MODEL', 'core/model');  //путь к модели
 
 define('VIEW', '/template/default/');  //путь к шаблону
 
-define('LIB','lib');  //путь к библиотекам
+define('LIB', 'lib');  //путь к библиотекам
 
 define('SITE_URL', '/');  //базовый путь к сайту !!!ОЛЕНЬ!!!!
 
-define('QUANTITY', 5);  //количество выводимых товаров при постраничной навигации
+define('QUANTITY', 3);  //количество выводимых товаров при постраничной навигации
 
 define('QUANTITY_LINKS', 3);  //ссылки при постраничной навигации
 
@@ -35,26 +35,26 @@ define('PASSWORD', '');
 
 define('DB_NAME', 'promenergo');
 
-define('IMG_WIDTH',116);
+define('IMG_WIDTH', 116);
 
 $conf = array(   //массив с настройками для подключения скриптов и стилей в header
-    'styles' => array(  //пользовательская часть
-        'style.css'
-    ),
-    'scripts' => array(
-        'JS/jquery-1.7.2.min.js',
-        'JS/jquery-ui-1.8.20.custom.min.js',
-        'JS/jquery.cookie.js',
-        'JS/js.js',
-        'JS/script.js',
-    ),
-    'styles_admin' => array(  //админская часть
-        'style.css'
-    ),
-    'scripts_admin' => array(
-        'JS/tiny_mce/tiny_mce.js',
-        'JS/tiny_script.js',
-    ),
+	'styles' => array(  //пользовательская часть
+		'style.css'
+	),
+	'scripts' => array(
+		'JS/jquery-1.7.2.min.js',
+		'JS/jquery-ui-1.8.20.custom.min.js',
+		'JS/jquery.cookie.js',
+		'JS/js.js',
+		'JS/script.js',
+	),
+	'styles_admin' => array(  //админская часть
+		'style.css'
+	),
+	'scripts_admin' => array(
+		'JS/tiny_mce/tiny_mce.js',
+		'JS/tiny_script.js',
+	),
 );
 
 
