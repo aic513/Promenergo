@@ -477,6 +477,7 @@ a:hover.arhiv-news {
 	font: 11px Arial;
 	background: url(images/punktir.gif) right repeat-y;
 	padding: 0 20px;
+	height:160px;
 }
 
 .product-cat img {
@@ -497,6 +498,7 @@ a:hover.arhiv-news {
 	text-align: center;
 	font: 11px Arial;
 	padding: 0 20px;
+	height:160px;
 }
 
 .product-cat-third img {
