@@ -218,5 +218,83 @@ class Model
 
 		return $row;
 	}
+
+	public function get_tovar($id)  //получаем товар по id
+	{
+		$result = $this->ins_driver->select(
+			array('title', 'text', 'img', 'keywords', 'discription'),
+			'tovar',
+			array('tovar_id' => $id, 'publish' => 1)
+		);
+		return $result[0];
+	}
+
+	public function get_pricelist()  //получаем данные для прайс-листа в excel
+	{
+		$sql = "
+				SELECT brands.brand_id,
+						brands.brand_name,
+						brands.parent_id,
+						tovar.title,
+						tovar.anons,
+						tovar.price
+						FROM brands
+				LEFT JOIN tovar
+					ON tovar.brand_id=brands.brand_id
+				WHERE brands.brand_id
+					IN( /*Этот запрос выберет id родительских категорий, если у их дочерних категорий есть какой-то товар*/
+						SELECT brands.parent_id FROM tovar 
+						LEFT JOIN brands ON tovar.brand_id=brands.brand_id
+						WHERE tovar.publish='1'
+					)
+					OR brands.brand_id
+					IN ( /*Этот запрос выберет id дочерних категорий, если у них категорий есть какой-то товар*/
+						SELECT brands.brand_id
+							 FROM tovar 
+							 LEFT JOIN brands 
+							 	ON tovar.brand_id=brands.brand_id 
+							WHERE tovar.publish='1'
+						)
+					AND  tovar.publish='1'
+				
+				";
+		$result = $this->ins_driver->ins_db->query($sql);  //выполняем запрос
+
+		if (!$result) {
+			throw new DbException("Ошибка базы данных : ".$this->ins_driver->ins_db->errno."|".$this->ins_driver->ins_db->error);
+		}
+		if ($result->num_rows == 0) {
+			return FALSE;
+		}
+
+		$myrow = array();  //выходной массив
+
+		for ($i = 0; $i < $result->num_rows; $i++) {
+			$row = $result->fetch_assoc();
+
+			if ($row['parent_id'] === '0') {
+				if (!empty($row['title'])) {
+					$myrow[$row['brand_id']][$row['brand_name']][] = array(
+						'title' => $row['title'],
+						'anons' => $row['anons'],
+						'price' => $row['price']
+
+					);
+				} else {
+					$myrow[$row['brand_id']][$row['brand_name']] = array();
+				}
+			} else {
+				$myrow[$row['parent_id']]['sub'][$row['brand_name']][] = array(
+					'title' => $row['title'],
+					'anons' => $row['anons'],
+					'price' => $row['price']
+
+				);
+			}
+
+		}
+
+		return $myrow;
+	}
 	
 }
