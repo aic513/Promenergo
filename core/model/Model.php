@@ -269,21 +269,21 @@ class Model
 
 		$myrow = array();  //выходной массив
 
-		for ($i = 0; $i < $result->num_rows; $i++) {
+		for ($i = 0; $i < $result->num_rows; $i++) {  //приводим массив к удобочитаемому виду
 			$row = $result->fetch_assoc();
 
-			if ($row['parent_id'] === '0') {
-				if (!empty($row['title'])) {
+			if ($row['parent_id'] === '0') {  //если категория родительская
+				if (!empty($row['title'])) {  //если поле title не пустое - товары есть
 					$myrow[$row['brand_id']][$row['brand_name']][] = array(
 						'title' => $row['title'],
 						'anons' => $row['anons'],
 						'price' => $row['price']
 
 					);
-				} else {
-					$myrow[$row['brand_id']][$row['brand_name']] = array();
+				} else {  //иначе товары есть
+					$myrow[$row['brand_id']][$row['brand_name']] = array();  //формируем пустой массив
 				}
-			} else {
+			} else {    //если категория дочерняя
 				$myrow[$row['parent_id']]['sub'][$row['brand_name']][] = array(
 					'title' => $row['title'],
 					'anons' => $row['anons'],
