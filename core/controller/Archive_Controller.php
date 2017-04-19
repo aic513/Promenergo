@@ -13,8 +13,8 @@ class Archive_Controller extends Base
 	{
 		parent::input();
 
-		if ($param[ 'page' ]) {  //существует ли ячейка page в адресной строке?
-			$page = $this->clear_int($param[ 'page' ]);
+		if ($param['page']) {  //существует ли ячейка page в адресной строке?
+			$page = $this->clear_int($param['page']);
 
 			if ($page == 0) {
 				$page = 1;
@@ -45,7 +45,7 @@ class Archive_Controller extends Base
 	public function output()
 	{
 
-		$this->content = $this->render(VIEW . 'archive_page',
+		$this->content = $this->render(VIEW.'archive_page',
 			array(
 				'archive' => $this->archive,
 				'navigation' => $this->navigation

@@ -16,7 +16,7 @@ class Search_Controller extends Base
 	protected function input($param = array())
 	{
 		parent::input();
-
+		
 		if (isset($param['page'])) {
 			$page = $this->clear_int($param['page']);
 
