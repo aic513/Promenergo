@@ -18,7 +18,7 @@ class Model
 		}
 	}
 
-	public function __construct()
+	private function __construct()
 	{
 		try {
 			$this->ins_driver = Model_Driver::get_instance();
