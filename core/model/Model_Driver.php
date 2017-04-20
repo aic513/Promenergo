@@ -23,9 +23,8 @@ class Model_Driver
 	{
 		$this->ins_db = new mysqli(HOST, USER, PASSWORD, DB_NAME);
 		if ($this->ins_db->connect_error) {  //Если соединиться не удалось-покажет какая именно была ошибка
-			throw new DbException ('Ошибка соединения с бд: '
-				.$this->ins_db->connect_errno.'|'
-				.$this->ins_db->connect_error);
+			throw new DbException("Ошибка соединения : ".$this->ins_db->connect_errno.
+				"|".iconv("CP1251", "UTF-8", $this->ins_db->connect_error));
 		}
 		
 		$this->ins_db->query("SET NAMES utf8");   //устанавливаем кодировку

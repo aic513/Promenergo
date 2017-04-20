@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Контроллер, который загружается по-умолчанию
+ */
+
 class Index_Controller extends Base
 {
 

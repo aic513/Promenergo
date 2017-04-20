@@ -31,7 +31,7 @@ function __autoload($class_name)  //автозагрузка классов
 	if (!include_once($class_name.".php")) {
 
 		try {
-			throw new ContrException($class_name.'Не правильный файл для подключения');
+			throw new ContrException($class_name.'.php - Не правильный файл для подключения');
 		} catch (ContrException $e) {
 			echo $e->getMessage();
 		}
@@ -39,7 +39,7 @@ function __autoload($class_name)  //автозагрузка классов
 }
 
 try {
-	$obj = Route_Controller::get_instance();
+	$obj = Route_Controller::get_instance();  //получаем объект класса Route_Controller
 	$obj->route();
 } catch (ContrException $e) {
 	return;

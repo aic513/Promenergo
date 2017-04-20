@@ -3,6 +3,8 @@
 /*
  * Контроллер для преобразования URL-адресов
  * Контроллер, без которого вообще не будет работать сайт
+ * Основное логическое ядро сайта
+ * Все контроллеры являются его наследниками
  */
 
 abstract class Base_Controller
@@ -17,7 +19,7 @@ abstract class Base_Controller
 	
 	public function route()  //загружает определенный контроллер
 	{
-		if (class_exists($this->controller))  //есть ли у этого класса такой контроллер?
+		if (class_exists($this->controller))  //есть ли у этого класса,который передан в адресной строке такой контроллер?
 		{
 
 			$ref = new ReflectionClass($this->controller);  //передали конструктуру имя класса
@@ -99,15 +101,15 @@ abstract class Base_Controller
 
 	public function request($param = array())  //метод запусает метод route
 	{
-		$this->init();
-		$this->input($param);
-		$this->output();
+		$this->init();  //загружаем стили и скрипты
+		$this->input($param);  //формируем начальные данные
+		$this->output();  //генерируем шаблон из кусков данных
 
-		if (!empty($this->error)) {
+		if (!empty($this->error)) {  //есть ли ошибки?
 			$this->write_error($this->error);
 		}
 
-		$this->get_page();
+		$this->get_page();  //выводим страницу на экран
 	}
 	
 	public function render($path, $param = array())  //метод-шаблонизатор,в этот метод передаем переменные,которые потом выводим в шаблоне

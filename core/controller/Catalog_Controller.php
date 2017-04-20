@@ -81,7 +81,7 @@ class Catalog_Controller extends Base
 			}
 			$ids = $this->ob_m->get_child($this->id);  // возвращаем все id товаров, которые входят в эту родительскую категорию
 			
-			if (!$ids) {
+			if (!$ids) {  //если false - сразу выходим из скрипта
 				return;
 			}
 			
