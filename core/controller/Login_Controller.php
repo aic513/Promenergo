@@ -4,14 +4,28 @@
  * Класс, отвечающий за авторизацию пользователей,выводит страницу авторизации
  */
 
-class Login_Controller extends Base
+class Login_Controller extends Base_Admin
 {
 	protected $ob_us;  //хранит объект модели юзера
 	
 	protected function input($param = array())
 	{
+		$this->user = FALSE;
 		parent::input();
+
 		$this->ob_us = Model_User::get_instance();  //получаем объект класс Model_User
+
+		if (isset($param['logout'])) {  //если в админке нажали на кнопку выйти
+			$logout = $this->clear_int($param['logout']);
+
+			if ($logout) {
+				$res = $this->ob_us->logout();
+				if ($res) {
+					header("Location:".SITE_URL."index");
+					exit();
+				}
+			}
+		}
 		
 		/*
 		 * Очистка всех юзеров, которые были заблокированы
@@ -26,13 +40,15 @@ class Login_Controller extends Base
 				isset($_POST['name'])
 				&& isset($_POST['password'])
 				&& $fealtures < 3
-			)
-			{  //передал ли пользователь заполенные данные имени и пароля в полях, и не ошибся ли он 3 раза при вводе данных?
+			) {  //передал ли пользователь заполенные данные имени и пароля в полях, и не ошибся ли он 3 раза при вводе данных?
 				$name = $this->clear_str($_POST['name']);
 				$password = $this->clear_str($_POST['password']);
 				try {
 					$id = $this->ob_us->get_user($name, $password);
 					$this->ob_us->check_id_user($id);  //записываем id юзера в свойсво модели $user_id
+					$this->ob_us->set();  //записываме данные юзера в куки
+					header("Location:".SITE_URL."admin");  //перенаправляем в админку
+					exit();
 					
 				} catch (AuthException $e) {
 					if ($fealtures == NULL) {  //если количество неправильных попыток равно нулю, то значит юзер еще не вводил неправильные данные
@@ -47,9 +63,10 @@ class Login_Controller extends Base
 	
 	protected function output()
 	{
-		$this->content = $this->render(VIEW.'login_page',
+		$this->content = $this->render(VIEW.'admin/login_page',
 			array('error' => $_SESSION['auth']));
 		$this->page = parent::output();
+		unset($_SESSION['auth']);
 		return $this->page;
 	}
 }
