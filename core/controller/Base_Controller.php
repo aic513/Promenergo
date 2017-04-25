@@ -150,7 +150,19 @@ abstract class Base_Controller
 	
 	public function check_auth()  //проверка авторизации
 	{
-		
+		try {  //методы, которые проверяют, действительно ли пользователь авторизован на сайте?
+			$cookie = Model_User::get_instance();  //создаю объект класса Model_User
+//			$cookie->check_id_user();
+//			$cookie->validate_cookie();
+			//exit();
+		}
+ catch (AuthException $e) {  //здесь вылетит исключение, если произошла ошибка в методах выше
+//			$this->error = "Ошибка авторизации пользователя | ";
+//			$this->error .= $e->getMessage();
+//			$this->write_error($this->error);
+			header("Location:".SITE_URL."login");
+			exit();
+		}
 	}
 	
 	public function img_resize($dest)  //уменьшает картинку

@@ -9,6 +9,8 @@ abstract class Base_Admin extends Base_Controller
 
 	protected $ob_m;  //объект модели сайта
 
+	protected $ob_us;  //объект модели работы с юзером
+
 	protected $title;  //заголовок страниц
 
 	protected $style;
@@ -38,6 +40,7 @@ abstract class Base_Admin extends Base_Controller
 		}
 
 		$this->ob_m = Model::get_instance();  //обращаемся к модели
+		$this->ob_us = Model_User::get_instance();  //обращаемся к модели юзера
 
 	}
 

@@ -37,6 +37,8 @@ define('DB_NAME', 'promenergo');
 
 define('IMG_WIDTH', 116);
 
+define('FEALT',1);  //количество дней, на которое будет забанен пользователь
+
 $conf = array(   //массив с настройками для подключения скриптов и стилей в header
 	'styles' => array(  //пользовательская часть
 		'style.css'

@@ -725,3 +725,16 @@ span.menu_links_text3 {
 a:hover span.menu_links_text, a:hover span.menu_links_text1, a:hover span.menu_links_text2, a:hover span.menu_links_text3 {
 	color: #09606f;
 }
+
+.submit_login{
+	background-color: #ececec;
+	color:185E7F;
+	margin-top: 5px;
+	display: block;
+	font:11px 'Tahoma';
+	padding: 4px;
+	text-decoration: underline;
+	width: 83px;
+	float: left;
+	border:0;
+}

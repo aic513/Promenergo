@@ -110,9 +110,92 @@ class Model_Driver
 		
 		return $row;
 		exit();
-
-//        echo $sql . '<br>';
-//        var_dump($operand);
-//        exit();
+	}
+	
+	public function delete($table, $where = array(), $operand = array('='))
+	{
+		
+		//$sql = "DELETE FROM brands WHERE brand_id=28";
+		
+		$sql = "DELETE FROM ".$table;
+		if (is_array($where)) {
+			$i = 0;
+			foreach ($where as $k => $v) {
+				$sql .= ' WHERE '.$k.$operand[$i]."'".$v."'";
+				$i++;
+				
+				if ((count($operand) - 1) < $i) {
+					$operand[$i] = $operand[$i - 1];
+				}
+			}
+			
+		}
+		
+		//echo $sql;
+		//exit();
+		$result = $this->ins_db->query($sql);
+		if (!$result) {
+			throw new DbException("Ошибка базы данных: ".$this->ins_db->errno." | ".$this->ins_db->error);
+			return FALSE;
+		}
+		return TRUE;;
+	}
+	
+	public function insert($table, $data = array(), $values = arraY(), $id = FALSE)
+	{
+		//$sql = "INSERT INTO brands (brand_name,parent_id) VALUES ('TEST','0')";
+		
+		$sql = "INSERT INTO ".$table." (";
+		
+		$sql .= implode(",", $data).") ";
+		
+		$sql .= "VALUES (";
+		
+		foreach ($values as $val) {
+			$sql .= "'".$val."'".",";
+		}
+		
+		$sql = rtrim($sql, ',').")";
+		
+		$result = $this->ins_db->query($sql);
+		
+		if (!$result) {
+			throw new DbException("Ошибка базы данных: ".$this->ins_db->errno." | ".$this->ins_db->error);
+			return FALSE;
+		}
+		
+		if ($id) {
+			return $this->ins_db->insert_id;
+		}
+		return TRUE;
+	}
+	
+	public function update($table, $data = array(), $values = array(), $where = array())
+	{
+		//$sql = "UPDATE brands SET brand_name='TES1',parent_id='1' WHERE brand_id = 29";
+		$data_res = array_combine($data, $values);
+		
+		
+		$sql = "UPDATE ".$table." SET ";
+		
+		foreach ($data_res as $key => $val) {
+			$sql .= $key."='".$val."',";
+		}
+		
+		$sql = rtrim($sql, ',');
+		
+		foreach ($where as $k => $v) {
+			$sql .= " WHERE ".$k."="."'".$v."'";
+		}
+		//echo $sql;
+		//exit();
+		$result = $this->ins_db->query($sql);
+		
+		if (!$result) {
+			throw new DbException("Ошибка базы данных: ".$this->ins_db->errno." | ".$this->ins_db->error);
+			return FALSE;
+		}
+		
+		return TRUE;
 	}
 }
