@@ -32,11 +32,11 @@ abstract class Base_Admin extends Base_Controller
 		$this->title = "ПромЭнергоСтрой |";
 
 		foreach ($this->styles_admin as $style) {
-			$this->style[] = SITE_URL.VIEW.'admin/'.$style;
+			$this->style[] = VIEW.'admin/'.$style;
 		}
 
 		foreach ($this->scripts_admin as $script) {
-			$this->script[] = SITE_URL.VIEW.'admin/'.$script;
+			$this->script[] = VIEW.'admin/'.$script;
 		}
 
 		$this->ob_m = Model::get_instance();  //обращаемся к модели

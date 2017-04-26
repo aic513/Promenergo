@@ -50,7 +50,7 @@ class Admin_Controller extends Base_Admin
 						$_SESSION['message'] = "Ошибка добавления данных";
 					}
 //					$this->message = $_SESSION['message'];
-					print_r($this->message);
+//					print_r($this->message);
 					header("Location:".SITE_URL."admin");
 					exit();
 				}

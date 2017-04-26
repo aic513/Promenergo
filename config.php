@@ -65,7 +65,7 @@ $conf = array(   //массив с настройками для подключ�
 		'style.css'
 	),
 	'scripts_admin' => array(
-		'JS/tiny_mce/tiny_mce.js',
+		'JS/tinymce/tinymce.min.js',
 		'JS/tiny_script.js',
 	),
 );
