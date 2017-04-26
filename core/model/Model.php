@@ -49,7 +49,7 @@ class Model
 
 	public function get_pages($all = FALSE)  //выбирает контент для левой колонки
 	{
-		if ($all) {
+		if ($all) {  //если выводим список страниц в админке в колонке справа
 			$result = $this->ins_driver->select(
 				array('page_id', 'title', 'type'),
 				'pages',
@@ -295,6 +295,16 @@ class Model
 		}
 
 		return $myrow;
+	}
+
+	public function add_page($title, $text, $position, $keywords, $discription)  //добавление инфы в в админке
+	{
+		$result = $this->ins_driver->insert(
+			'pages',
+			array('title', 'text', 'position', 'keywords', 'discription'),
+			array($title, $text, $position, $keywords, $discription)
+		);
+		return $result;
 	}
 	
 }
