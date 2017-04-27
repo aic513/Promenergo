@@ -307,7 +307,7 @@ class Model
 		return $result;
 	}
 
-	public function get_page_admin($id)  //получаем данные для редактирования странц в админке
+	public function get_page_admin($id)  //получаем данные по одной странице для редактирования странц в админке
 	{
 		$result = $this->ins_driver->select(
 			array('page_id', 'title', 'keywords', 'discription', 'text', 'position'),
@@ -334,5 +334,45 @@ class Model
 
 		return $result;
 	}
-	
+
+
+	public function add_news($title, $text, $anons, $keywords, $discription)  //добавить новость через админку
+	{
+		$result = $this->ins_driver->insert('news',
+			array('title', 'text', 'anons', 'date', 'keywords', 'discription'),
+
+			array($title, $text, $anons, time(), $keywords, $discription)
+		);
+		return $result;
+	}
+
+	public function get_admin_news_text($id)  //получаем одну новость из бд
+	{
+		$result = $this->ins_driver->select(
+			array('news_id', 'title', 'anons', 'text', 'date', 'keywords', 'discription'),
+			'news',
+			array('news_id' => $id)
+		);
+		return $result[0];
+	}
+
+	public function edit_news($title, $text, $anons, $id, $keywords, $discription)  //редактируем новость через админку
+	{
+		$result = $this->ins_driver->update(
+			'news',
+			array('title', 'text', 'anons', 'date', 'keywords', 'discription'),
+			array($title, $text, $anons, time(), $keywords, $discription),
+			array('news_id' => $id)
+		);
+		return $result;
+
+	}
+
+	public function delete_news($id)  //удаляем новость через админку
+	{
+		$result = $this->ins_driver->delete(
+			'news', array('news_id' => $id)
+		);
+		return $result;
+	}
 }
