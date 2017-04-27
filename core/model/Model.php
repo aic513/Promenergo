@@ -306,5 +306,33 @@ class Model
 		);
 		return $result;
 	}
+
+	public function get_page_admin($id)  //получаем данные для редактирования странц в админке
+	{
+		$result = $this->ins_driver->select(
+			array('page_id', 'title', 'keywords', 'discription', 'text', 'position'),
+			'pages',
+			array('page_id' => $id)
+		);
+		return $result[0];
+	}
+
+	public function edit_page($id, $title, $text, $position, $keywords, $discription)  //редактирование в админке
+	{
+		$result = $this->ins_driver->update(
+			'pages',
+			array('page_id', 'title', 'text', 'position', 'keywords', 'discription'),
+			array($id, $title, $text, $position, $keywords, $discription),
+			array('page_id' => $id)
+		);
+		return $result;
+	}
+
+	public function delete_page($id)  //удаление в админке
+	{
+		$result = $this->ins_driver->delete('pages', array('page_id' => $id));
+
+		return $result;
+	}
 	
 }
