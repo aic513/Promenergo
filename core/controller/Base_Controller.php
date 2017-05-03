@@ -155,8 +155,7 @@ abstract class Base_Controller
 			$cookie->check_id_user();
 			$cookie->validate_cookie();
 			//exit();
-		}
- catch (AuthException $e) {  //здесь вылетит исключение, если произошла ошибка в методах выше
+		} catch (AuthException $e) {  //здесь вылетит исключение, если произошла ошибка в методах выше
 			$this->error = "Ошибка авторизации пользователя | ";
 			$this->error .= $e->getMessage();
 			$this->write_error($this->error);
@@ -165,9 +164,70 @@ abstract class Base_Controller
 		}
 	}
 	
-	public function img_resize($dest)  //уменьшает картинку
+	public function img_resize($dest, $type)  //уменьшает картинку
 	{
+		switch ($type) {
+			case 'jpeg':
+				$img_id = imageCreateFromJpeg($dest);  //хранит ресурс исходного изображения
+				break;
+		}
+
+//		$img_id = imageCreateFromJpeg($dest);
+
+		$img_width = imageSX($img_id);  //ширина картинки
+		$img_height = imageSY($img_id);  //высота картинки
+
+		$k = round($img_width / IMG_WIDTH, 2);  //коэффициент пропорциональности
+
+		$img_mini_width = round($img_width / $k);  //min ширина
+		$img_mini_height = round($img_height / $k);  //min высота
+
+		$img_dest_id = imageCreateTrueColor($img_mini_width, $img_mini_height);  //создаем новое пустое изображение
+
+		$result = imageCopyResampled(  //создаем уменьшенную копию картинки
+			$img_dest_id,  //ресурс изображения
+			$img_id,  //ресурс изображения, из которого делаем копию
+			/*
+			 *координаты
+			 */
+			0,
+			0,
+			0,
+			0,
+			/*
+			 * размеры создаваемого изображения
+			 */
+			$img_mini_width,
+			$img_mini_height,
+			/*
+			 * размеры исходного изображения
+			 */
+			$img_width,
+			$img_height
+		);
+		$name_img = $this->rand_str().'.jpg';  //имя изображения
+
+		$img = imageJpeg($img_dest_id, UPLOAD_DIR.$name_img, 100);  //создаем файл изображения и сохраняем его
+
+		/*
+		 * очищаем память
+		 */
 		
+		imageDestroy($img_id);  //удаляем ресурс исходного изображения
+		imageDestroy($img_dest_id);  //удаляем ресурс созданного изображения
+
+		if ($img) {
+			return $name_img;
+		} else {
+			return FALSE;
+		}
 	}
-	
+
+	protected function rand_str()  //формирует случайное имя для изображения
+	{
+		$str = md5(microtime());
+
+		return substr($str, 0, 10);
+	}
+
 }

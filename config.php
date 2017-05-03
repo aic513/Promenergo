@@ -37,6 +37,8 @@ define('DB_NAME', 'promenergo');
 
 define('IMG_WIDTH', 116);
 
+define('NOIMAGE','rpodukt.jpg');
+
 /*
  * Константы, относящиеся к безопаснсти сайта
  */

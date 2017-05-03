@@ -375,4 +375,95 @@ class Model
 		);
 		return $result;
 	}
+
+	public function get_parent_brands()  //получаем только родительские категории
+	{
+		$result = $this->ins_driver->select(
+			array('brand_id', 'brand_name'),
+			'brands',
+			array('parent_id' => 0)
+		);
+		return $result;
+	}
+
+	public function add_category($title, $parent)  //добавляет категии в бд
+	{
+		$result = $this->ins_driver->insert(
+			'brands',
+			array('brand_name', 'parent_id'),
+			array($title, $parent)
+		);
+		return $result;
+	}
+
+	public function add_new_type($type_name)  //добавляет тип в бд
+	{
+		$result = $this->ins_driver->insert(
+			'type',
+			array('type_name'),
+			array($type_name),
+			TRUE
+		);
+		return $result;
+	}
+
+	public function add_goods($id,  //добавляет товар в бд
+	                          $title,
+	                          $anons,
+	                          $text,
+	                          $img,
+	                          $type,
+	                          $publish,
+	                          $price,
+	                          $keywords,
+	                          $discription)
+	{
+		$result = $this->ins_driver->insert(
+			'tovar',
+			array('title', 'anons', 'text', 'img', 'brand_id', 'type_id', 'publish', 'price', 'keywords', 'discription'),
+			array($title, $anons, $text, $img, $id, $type, $publish, $price, $keywords, $discription)
+		);
+		return $result;
+	}
+
+	public function get_tovar_adm($id)  //получаем товар в админке по id
+	{
+		$result = $this->ins_driver->select(
+			array('tovar_id', 'title', 'text', 'img', 'keywords', 'discription', 'anons', 'brand_id', 'type_id', 'publish', 'price'),
+			'tovar',
+			array('tovar_id' => $id)
+		);
+		return $result[0];
+	}
+
+	public function edit_goods($id, $title, $anons, $text, $img, $type, $publish, $price, $category, $keywords, $discription)  //редактирование товара
+	{
+		if ($img) {
+			$result = $this->ins_driver->update(
+				'tovar',
+				array('title', 'anons', 'text', 'img', 'type_id', 'publish', 'price', 'brand_id', 'keywords', 'discription'),
+				array($title, $anons, $text, $img, $type, $publish, $price, $category, $keywords, $discription),
+				array('tovar_id' => $id)
+			);
+
+		} else {
+			$result = $this->ins_driver->update(
+				'tovar',
+				array('title', 'anons', 'text', 'type_id', 'publish', 'price', 'brand_id', 'keywords', 'discription'),
+				array($title, $anons, $text, $type, $publish, $price, $category, $keywords, $discription),
+				array('tovar_id' => $id)
+			);
+		}
+		return $result;
+	}
+
+	public function delete_tovar($id)  //удаление товара
+	{
+		$result = $this->ins_driver->delete(
+			'tovar',
+			array('tovar_id' => $id)
+		);
+		return $result;
+	}
+
 }
