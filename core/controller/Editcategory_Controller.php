@@ -88,7 +88,7 @@ class Editcategory_Controller extends Base_Admin
 				}
 			}
 		}
-
+		
 		$this->brands = $this->ob_m->get_catalog_brands();
 		$this->parents_cat = $this->ob_m->get_parent_brands();
 

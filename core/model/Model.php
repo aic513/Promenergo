@@ -466,4 +466,55 @@ class Model
 		return $result;
 	}
 
+
+	public function get_category($id)  //получаем категорию по id
+	{
+		$result = $this->ins_driver->select(
+			array('brand_id', 'brand_name', 'parent_id'),
+			'brands',
+			array('brand_id' => $id)
+		);
+		return $result[0];
+	}
+
+	public function edit_category($title, $parent, $id)  //редактируем категорию
+	{
+
+
+		$result = $this->ins_driver->update(
+			'brands',
+			array('brand_name', 'parent_id'),
+			array($title, $parent),
+			array('brand_id' => $id)
+		);
+
+
+		return $result;
+	}
+
+	public function delete_category($id)  //удаляем категорию
+	{
+		$result = $this->ins_driver->delete(
+			'brands',
+			array('brand_id' => $id)
+		);
+		$result2 = $this->ins_driver->update(
+			'tovar',
+			array('brand_id'),
+			array(0),
+			array('brand_id' => $id)
+		);
+		if ($result) {
+			if ($result2) {
+				return TRUE;
+			} else {
+				return $result2;
+			}
+		} else {
+			return $result;
+		}
+
+
+	}
+
 }
