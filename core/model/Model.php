@@ -8,7 +8,7 @@ class Model
 {
 	static $instance;
 	public $ins_driver;
-
+	
 	static function get_instance()
 	{
 		if (self::$instance instanceof self) {
@@ -17,7 +17,7 @@ class Model
 			return self::$instance = new self;
 		}
 	}
-
+	
 	private function __construct()
 	{
 		try {
@@ -26,7 +26,7 @@ class Model
 			exit();
 		}
 	}
-
+	
 	public function get_news()  //выбрает новости, для правой колонки
 	{
 		$result = $this->ins_driver->select(
@@ -41,12 +41,12 @@ class Model
 		foreach ($result as $value) {
 			$value['anons'] = substr($value['anons'], 0, 255);
 			$value['anons'] = substr($value['anons'], 0, strrpos($value['anons'], ' '));
-
+			
 			$row[] = $value;
 		}
 		return $row;
 	}
-
+	
 	public function get_pages($all = FALSE)  //выбирает контент для левой колонки
 	{
 		if ($all) {  //если выводим список страниц в админке в колонке справа
@@ -70,7 +70,7 @@ class Model
 		}
 		return $result;
 	}
-
+	
 	public function get_catalog_type()  //выбирает типы каталога
 	{
 		$result = $this->ins_driver->select(
@@ -79,14 +79,14 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function get_catalog_brands()  //выбирает товар по брендам слева
 	{
 		$result = $this->ins_driver->select(
 			array('brand_id', 'brand_name', 'parent_id'),
 			'brands'
 		);
-
+		
 		$arr = array();  //создаем новый масиив для более удобного вывода брендов,так как из бд выходит неудобный массив
 		foreach ($result as $item) {
 			if ($item['parent_id'] == 0) {  //если parent_id==0, значит родительская категория
@@ -97,7 +97,7 @@ class Model
 		}
 		return $arr;
 	}
-
+	
 	public function get_home_page()  // выбирает контент для домашней страницы
 	{
 		$result = $this->ins_driver->select(
@@ -110,7 +110,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function get_header_menu()  //выбирает меню для хедера  SELECT type_id,type_name FROM type WHERE in_header IN ('1','2','3','4')
 	{
 		$result = $this->ins_driver->select(
@@ -128,11 +128,11 @@ class Model
 			$item['type_name'] = mb_convert_case($item['type_name'], MB_CASE_UPPER, "UTF-8");  //меняем регистр букв на верхний
 			$row[] = $item;
 		}
-
+		
 		return $row;
-
+		
 	}
-
+	
 	public function get_news_text($id)  //получаем одну новость по id
 	{
 		$result = $this->ins_driver->select(    //SELECT  'title', 'text', 'date', 'keywords', 'discription' FROM news WHERE 'news_id' => $id
@@ -142,7 +142,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function get_page($id)   //получаем полный текст страниц
 	{
 		$result = $this->ins_driver->select(  //SELECT  'title', 'text', 'date', 'keywords', 'discription' FROM pages WHERE 'news_id' => $id
@@ -152,7 +152,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function get_contacts()  //получаем страницу контактов по клику на иконку контакты
 	{
 		$result = $this->ins_driver->select(
@@ -162,7 +162,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function get_child($id)  //получаем id всех потомков, которые входят в данную родительскую категорию
 	{
 		$result = $this->ins_driver->select(
@@ -176,16 +176,16 @@ class Model
 				$row[] = $item['brand_id'];
 			}
 			$row[] = $id;
-
+			
 			$res = implode(",", $row);
-
+			
 			return $res;
 		} else {
 			return FALSE;
 		}
-
+		
 	}
-
+	
 	public function get_krohi($type, $id)  //выбирает данные для хлебных крошек в каталоге товаров
 	{
 		if ($type == 'type') {
@@ -193,7 +193,7 @@ class Model
 					FROM type
 					WHERE type_id = $id";
 		}
-
+		
 		if ($type == "brand") {
 			//где brand_id=id бренда в родительской категории
 			$sql = "(SELECT brand_id,brand_name
@@ -203,7 +203,7 @@ class Model
 					(SELECT brand_id, brand_name FROM brands WHERE brand_id = $id)";
 		}
 		$result = $this->ins_driver->ins_db->query($sql);
-
+		
 		if (!$result) {
 			throw new DbException("Ошибка базы данных".$this->ins_driver->ins_db->errno."|".$this->ins_driver->ins_db->error);
 		}
@@ -211,14 +211,14 @@ class Model
 			return FALSE;
 		}
 		$row = array();
-
+		
 		for ($i = 0; $i < $result->num_rows; $i++) {
 			$row[] = $result->fetch_assoc();
 		}
-
+		
 		return $row;
 	}
-
+	
 	public function get_tovar($id)  //получаем товар по id
 	{
 		$result = $this->ins_driver->select(
@@ -228,7 +228,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function get_pricelist()  //получаем данные для прайс-листа в excel
 	{
 		$sql = "
@@ -259,26 +259,26 @@ class Model
 				
 				";
 		$result = $this->ins_driver->ins_db->query($sql);  //выполняем запрос
-
+		
 		if (!$result) {
 			throw new DbException("Ошибка базы данных : ".$this->ins_driver->ins_db->errno."|".$this->ins_driver->ins_db->error);
 		}
 		if ($result->num_rows == 0) {
 			return FALSE;
 		}
-
+		
 		$myrow = array();  //выходной массив
-
+		
 		for ($i = 0; $i < $result->num_rows; $i++) {  //приводим массив к удобочитаемому виду
 			$row = $result->fetch_assoc();
-
+			
 			if ($row['parent_id'] === '0') {  //если категория родительская
 				if (!empty($row['title'])) {  //если поле title не пустое - товары есть
 					$myrow[$row['brand_id']][$row['brand_name']][] = array(
 						'title' => $row['title'],
 						'anons' => $row['anons'],
 						'price' => $row['price']
-
+					
 					);
 				} else {  //иначе товары есть
 					$myrow[$row['brand_id']][$row['brand_name']] = array();  //формируем пустой массив
@@ -288,15 +288,15 @@ class Model
 					'title' => $row['title'],
 					'anons' => $row['anons'],
 					'price' => $row['price']
-
+				
 				);
 			}
-
+			
 		}
-
+		
 		return $myrow;
 	}
-
+	
 	public function add_page($title, $text, $position, $keywords, $discription)  //добавление инфы в в админке
 	{
 		$result = $this->ins_driver->insert(
@@ -306,7 +306,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function get_page_admin($id)  //получаем данные по одной странице для редактирования странц в админке
 	{
 		$result = $this->ins_driver->select(
@@ -316,7 +316,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function edit_page($id, $title, $text, $position, $keywords, $discription)  //редактирование в админке
 	{
 		$result = $this->ins_driver->update(
@@ -327,25 +327,25 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function delete_page($id)  //удаление в админке
 	{
 		$result = $this->ins_driver->delete('pages', array('page_id' => $id));
-
+		
 		return $result;
 	}
-
-
+	
+	
 	public function add_news($title, $text, $anons, $keywords, $discription)  //добавить новость через админку
 	{
 		$result = $this->ins_driver->insert('news',
 			array('title', 'text', 'anons', 'date', 'keywords', 'discription'),
-
+			
 			array($title, $text, $anons, time(), $keywords, $discription)
 		);
 		return $result;
 	}
-
+	
 	public function get_admin_news_text($id)  //получаем одну новость из бд
 	{
 		$result = $this->ins_driver->select(
@@ -355,7 +355,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function edit_news($title, $text, $anons, $id, $keywords, $discription)  //редактируем новость через админку
 	{
 		$result = $this->ins_driver->update(
@@ -365,9 +365,9 @@ class Model
 			array('news_id' => $id)
 		);
 		return $result;
-
+		
 	}
-
+	
 	public function delete_news($id)  //удаляем новость через админку
 	{
 		$result = $this->ins_driver->delete(
@@ -375,7 +375,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function get_parent_brands()  //получаем только родительские категории
 	{
 		$result = $this->ins_driver->select(
@@ -385,7 +385,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function add_category($title, $parent)  //добавляет категии в бд
 	{
 		$result = $this->ins_driver->insert(
@@ -395,7 +395,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function add_new_type($type_name)  //добавляет тип в бд
 	{
 		$result = $this->ins_driver->insert(
@@ -406,7 +406,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function add_goods($id,  //добавляет товар в бд
 	                          $title,
 	                          $anons,
@@ -425,7 +425,7 @@ class Model
 		);
 		return $result;
 	}
-
+	
 	public function get_tovar_adm($id)  //получаем товар в админке по id
 	{
 		$result = $this->ins_driver->select(
@@ -435,7 +435,7 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function edit_goods($id, $title, $anons, $text, $img, $type, $publish, $price, $category, $keywords, $discription)  //редактирование товара
 	{
 		if ($img) {
@@ -445,7 +445,7 @@ class Model
 				array($title, $anons, $text, $img, $type, $publish, $price, $category, $keywords, $discription),
 				array('tovar_id' => $id)
 			);
-
+			
 		} else {
 			$result = $this->ins_driver->update(
 				'tovar',
@@ -456,7 +456,7 @@ class Model
 		}
 		return $result;
 	}
-
+	
 	public function delete_tovar($id)  //удаление товара
 	{
 		$result = $this->ins_driver->delete(
@@ -465,8 +465,8 @@ class Model
 		);
 		return $result;
 	}
-
-
+	
+	
 	public function get_category($id)  //получаем категорию по id
 	{
 		$result = $this->ins_driver->select(
@@ -476,22 +476,22 @@ class Model
 		);
 		return $result[0];
 	}
-
+	
 	public function edit_category($title, $parent, $id)  //редактируем категорию
 	{
-
-
+		
+		
 		$result = $this->ins_driver->update(
 			'brands',
 			array('brand_name', 'parent_id'),
 			array($title, $parent),
 			array('brand_id' => $id)
 		);
-
-
+		
+		
 		return $result;
 	}
-
+	
 	public function delete_category($id)  //удаляем категорию
 	{
 		$result = $this->ins_driver->delete(
@@ -513,8 +513,39 @@ class Model
 		} else {
 			return $result;
 		}
-
-
+		
+		
 	}
-
+	
+	public function get_type_adm($id)  //получаем тип по id
+	{
+		$result = $this->ins_driver->select(
+			array('type_id', 'type_name', 'in_header'),
+			'type',
+			array('type_id' => $id)
+		);
+		
+		return $result[0];
+	}
+	
+	public function edit_types($type_name, $in_header, $id)  //редактируем тип
+	{
+		$result = $this->ins_driver->update(
+			'type',
+			array('type_name', 'in_header'),
+			array($type_name, $in_header),
+			array('type_id' => $id)
+		);
+		return $result;
+	}
+	
+	public function delete_types($id)  //удаляем тип
+	{
+		$result = $this->ins_driver->delete(
+			'type',
+			array('type_id' => $id)
+		);
+		return $result;
+	}
+	
 }

@@ -673,7 +673,6 @@ p.more {
 
 .adm-bord-bot {
 	height: 2px;
-	width:;
 	background: url(images/punktir.gif) bottom repeat-x;
 	margin: 20px 20px 0;
 }
@@ -684,4 +683,8 @@ p.more {
 
 .button-catalog-adm img {
 	margin: 0 10px 0 17px;
+}
+
+.edit_types td{
+	padding: 5px;
 }
