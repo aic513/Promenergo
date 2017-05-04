@@ -547,5 +547,32 @@ class Model
 		);
 		return $result;
 	}
+
+	public function update_page_options($option, $new_id, $old = FALSE)  //метод для редактирования главной и страницы контактов в админке (справа)
+		/*
+		 * передаем $option - тип страницы
+		 * $new_id - id новой страницы
+		 * $old - id предыдущей страницы
+		 */
+	{
+
+		if (!$old) {
+			$sql = "UPDATE pages SET type = '$option' WHERE page_id='$new_id'";
+		} else {
+			$sql = "UPDATE pages SET type = CASE
+					WHEN page_id='$new_id' THEN '$option'
+					WHEN page_id='$old' THEN 'post' END
+					WHERE page_id IN('".$new_id."','".$old."')";
+		}
+
+		$result = $this->ins_driver->ins_db->query($sql);
+		if (!$result) {
+			throw new DbException("Ошибка базы данных: ".$this->ins_db->errno." | ".$this->ins_db->error);
+			return FALSE;
+		}
+		return TRUE;
+
+	}
+
 	
 }
