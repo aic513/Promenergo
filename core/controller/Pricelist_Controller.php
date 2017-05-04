@@ -1,5 +1,5 @@
 <?php
-
+defined('PROM') or exit('Access denied');
 /*
  * Контроллер для генерации прайс листа по ссылке в excel документ
  */

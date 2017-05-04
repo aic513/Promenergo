@@ -527,6 +527,13 @@ a:hover.arhiv-news {
 	overflow: hidden;
 }
 
+.pager {
+	list-style: none;
+	margin: 30px auto 30px auto !important;
+	overflow: hidden;
+	width: 565px;
+}
+
 .pager li {
 	float: left;
 	margin: 0 4px;
@@ -554,6 +561,12 @@ a:hover.arhiv-news {
 	width: 33px;
 	font: 13px Tahoma;
 	color: #fff;
+	padding: 4px 0;
+}
+
+.pager li.first a, .pager li.last a {
+	background: url(images/bgPage_last.gif) no-repeat;
+	width: 90px;
 	padding: 4px 0;
 }
 

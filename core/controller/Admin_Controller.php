@@ -1,4 +1,5 @@
 <?php
+defined('PROM') or exit('Access denied');
 
 /*
  * Класс для админки

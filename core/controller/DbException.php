@@ -1,5 +1,5 @@
 <?php
-
+defined('PROM') or exit('Access denied');
 /*
  * Класс обработки ошибок, связанных с БД
  */

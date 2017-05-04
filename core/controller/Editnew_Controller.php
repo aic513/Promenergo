@@ -1,5 +1,5 @@
 <?php
-
+defined('PROM') or exit('Access denied');
 /*
  * Класс для работы с новостями из админки, делаем по аналогии с Admin_Controller
  */

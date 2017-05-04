@@ -1,5 +1,5 @@
 <?php
-
+defined('PROM') or exit('Access denied');
 /*
  * Класс вывода контактов
  */
